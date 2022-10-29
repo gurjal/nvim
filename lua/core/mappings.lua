@@ -1,13 +1,10 @@
 local cmd = vim.cmd
 local api = vim.api
 local opt = vim.opt
-local packadd = vim.cmd.packadd
 
--- n, v, i, t = mode names
+local m = {}
 
-local M = {}
-
-M.general = {
+m.general = {
     i = {
         ["jk"] = { "<esc>", "escape sequence" },
         ["kj"] = { "<esc>", "escape sequence" },
@@ -30,6 +27,13 @@ M.general = {
         ["<space>Q"] = { "<cmd> q! <CR>", "force quit" },
         ["<space>c"] = { "<cmd> bd <CR>", "close buffer" },
 
+        ["<space><space>"] = {
+            function()
+                require("body.part-hardline").toggle()
+            end,
+            "toggle status line",
+        },
+
         -- switch between windows
         ["<c-h>"] = { "<c-w>h", "window left" },
         ["<c-l>"] = { "<c-w>l", "window right" },
@@ -44,7 +48,7 @@ M.general = {
         ["[<space>"] = {
             function()
                 local cursor_pos = api.nvim_win_get_cursor(0)
-                cmd.normal "O"
+                cmd.normal("O")
                 api.nvim_win_set_cursor(0, { cursor_pos[1] + 1, cursor_pos[2] })
             end,
             "prepend line",
@@ -52,7 +56,7 @@ M.general = {
         ["]<space>"] = {
             function()
                 local cursor_pos = api.nvim_win_get_cursor(0)
-                cmd.normal "o"
+                cmd.normal("o")
                 api.nvim_win_set_cursor(0, cursor_pos)
             end,
             "append line",
@@ -76,10 +80,10 @@ M.general = {
             function()
                 if opt.scrolloff:get() ~= 9999 then
                     opt.scrolloff = 9999
-                    require "notify" "scroll mode is on"
+                    require("notify")("scroll mode is on")
                 else
                     opt.scrolloff = 4
-                    require "notify" "scroll mode is off"
+                    require("notify")("scroll mode is off")
                 end
             end,
             "toggle scroll mode",
@@ -88,11 +92,11 @@ M.general = {
         ["<space>on"] = {
             function()
                 if vim.opt.number:get() == false then
-                    cmd.set "nu rnu"
-                    require "notify" "line numbers are on"
+                    cmd.set("nu rnu")
+                    require("notify")("line numbers are on")
                 else
-                    cmd.set "nonu nornu"
-                    require "notify" "line numbers are off"
+                    cmd.set("nonu nornu")
+                    require("notify")("line numbers are off")
                 end
             end,
             "toggle line numbers",
@@ -102,14 +106,17 @@ M.general = {
             function()
                 if vim.opt.wrap:get() == false then
                     opt.wrap = true
-                    require "notify" "line wrapping is on"
+                    require("notify")("line wrapping is on")
                 else
                     opt.wrap = false
-                    require "notify" "line wrapping is off"
+                    require("notify")("line wrapping is off")
                 end
             end,
             "toggle line wrapping",
         },
+
+        ["<space>ol"] = { "<cmd> LspStart <cr>", "start lsp" },
+        ["<space>oL"] = { "<cmd> LspStop <cr>", "stop lsp" },
     },
 
     v = {
@@ -126,14 +133,59 @@ M.general = {
     },
 }
 
-M.neotree = {
+-- m.neotree = {
+--     pkg = true,
+--     n = {
+--         ["<space>e"] = { "<cmd> Neotree action=focus toggle=true <cr>", "toggle file explorer" },
+--         ["<leader>e"] = { "<cmd> Neotree action=focus <cr>", "toggle file explorer" },
+--     },
+-- }
+
+m.chadtree = {
     pkg = true,
     n = {
-        ["<space>e"] = { "<cmd> Neotree action=focus toggle=true <cr>", "toggle file explorer" },
+        ["<space>e"] = { "<cmd> CHADopen <cr>", "toggle file explorer" },
+        -- ["<leader>e"] = { "<cmd> Neotree action=focus <cr>", "toggle file explorer" },
     },
 }
 
-M.comment = {
+m.sidebar = {
+    pkg = true,
+    n = {
+        ["<space>t"] = { "<cmd> SidebarNvimToggle <cr> <cmd> SidebarNvimFocus <cr>", "open sidebar" },
+        ["<leader>t"] = { "<cmd> SidebarNvimFocus <cr>", "focus sidebar" },
+    },
+}
+
+m.leap_ast = {
+    pkg = true,
+    n = {
+        ["<space>p"] = {
+            function()
+                require("leap-ast").leap()
+            end,
+            "leap to node",
+        },
+    },
+    x = {
+        ["<space>p"] = {
+            function()
+                require("leap-ast").leap()
+            end,
+            "leap to node",
+        },
+    },
+    o = {
+        ["<space>p"] = {
+            function()
+                require("leap-ast").leap()
+            end,
+            "leap to node",
+        },
+    },
+}
+
+m.comment = {
     pkg = true,
 
     -- toggle comment in both modes
@@ -154,11 +206,25 @@ M.comment = {
     },
 }
 
-M.lspconfig = {
+-- m.coq = {
+--     pkg = true,
+--     i = {
+--         ["<Esc>"] = { 'pumvisible() ? "<c-e><Esc>" : "<Esc>" <cr>', "" },
+--         ["<a-c>"] = { '<cmd> echo pumvisible() ? "<c-e><c-c>" : "<c-c>" <cr>', "" },
+--         ["<BS>"] = { '<cmd> echo pumvisible() ? "<c-e><BS>"  : "<BS>" <cr>', "" },
+--         ["<CR>"] = {
+--             '<cmd> echo pumvisible() ? (complete_info().selected == -1 ? "<c-n><c-y>" : "<c-y>") : "<CR>" <cr>',
+--             "",
+--         },
+--         ["<Tab>"] = { '<cmd> echo pumvisible() ? "<c-n>" : "<Tab>" <cr>', "" },
+--         ["<S-Tab>"] = { '<cmd> echo pumvisible() ? "<c-p>" : "<BS>" <cr>', "" },
+--     },
+-- }
+
+m.lspconfig = {
     pkg = true,
 
     n = {
-
         ["gD"] = {
             function()
                 vim.lsp.buf.declaration()
@@ -224,7 +290,7 @@ M.lspconfig = {
 
         ["<space>lf"] = {
             function()
-                vim.lsp.buf.format { async = true }
+                vim.lsp.buf.format({ async = true })
             end,
             "lsp formatting",
         },
@@ -250,46 +316,82 @@ M.lspconfig = {
             "list workspace folders",
         },
 
-        ["gd"] = { "<cmd> Telescope lsp_definitions <cr>", "lsp definition" },
-        ["gi"] = { "<cmd> Telescope lsp_implementations <cr>", "lsp implementation" },
-        ["gr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
-        ["gt"] = { "<cmd> Telescope lsp_type_definitions <cr>", "lsp definition type" },
-        ["<space>sd"] = { "<cmd> Telescope diagnostics <cr>", "search lsp diagnostics" },
-        ["<space>ss"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
-        ["<space>sw"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
-        ["<space>si"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
-        ["<space>so"] = { "<cmd> Telescope lsp_outgoing_calls <cr>", "search lsp outgoing calls" },
+        ["gd"] = {
+            function()
+                require("telescope.builtin").lsp_definitions()
+            end,
+            "lsp definition",
+        },
+        ["gi"] = {
+            function()
+                require("telescope.builtin").lsp_implementations()
+            end,
+            "lsp implementation",
+        },
+        ["gr"] = {
+            function()
+                require("telescope.builtin").lsp_references()
+            end,
+            "lsp references",
+        },
+        ["gt"] = {
+            function()
+                require("telescope.builtin").lsp_type_definitions()
+            end,
+            "lsp definition type",
+        },
+        ["<space>sd"] = {
+            function()
+                require("telescope.builtin").diagnostics()
+            end,
+            "search lsp diagnostics",
+        },
+        ["<space>ss"] = {
+            function()
+                require("telescope.builtin").lsp_document_symbols()
+            end,
+            "search lsp document symbols",
+        },
+        ["<space>sw"] = {
+            function()
+                require("telescope.builtin").lsp_dynamic_workspace_symbols()
+            end,
+            "search lsp workspace symbols",
+        },
+        ["<space>si"] = {
+            function()
+                require("telescope.builtin").lsp_incoming_calls()
+            end,
+            "search lsp incoming calls",
+        },
+        ["<space>so"] = {
+            function()
+                require("telescope.builtin").lsp_outgoing_calls()
+            end,
+            "search lsp outgoing calls",
+        },
     },
 }
 
 local autoformatting_status = false
-local autoformatting_loaded = false
-local load_autoformatting = function()
-    if autoformatting_loaded == false then
-        packadd "formatter.nvim"
-        require "pkgs.configs.mod-formatter"
-        autoformatting_loaded = true
-    end
-end
-M.formatter = {
+m.formatter = {
     pkg = true,
     n = {
         ["<space>of"] = {
             function()
                 if autoformatting_status == false then
                     autoformatting_status = true
-                    load_autoformatting()
-                    cmd [[
-            augroup FormatAutogroup
-              autocmd!
-              autocmd BufWritePost * FormatWrite
-            augroup END
-          ]]
-                    require "notify" "autoformatting is on"
+                    cmd([[
+                    augroup FormatAutogroup
+                        autocmd!
+                        autocmd BufWritePost * FormatWrite
+                    augroup END
+                    ]])
+                    require("notify")("autoformatting is on")
                 else
                     autoformatting_status = false
-                    cmd "autocmd! FormatAutogroup"
-                    require "notify" "autoformatting is off"
+                    cmd("autocmd! FormatAutogroup")
+                    require("notify")("autoformatting is off")
                 end
             end,
             "toggle autoformatting",
@@ -297,18 +399,59 @@ M.formatter = {
     },
 }
 
-M.telescope = {
+m.telescope = {
     pkg = true,
 
     n = {
         -- find
-        ["<space>f"] = { "<cmd> Telescope find_files <cr>", "search files" },
-        ["<space>g"] = { "<cmd> Telescope live_grep <cr>", "live grep" },
-        ["<space>b"] = { "<cmd> Telescope buffers <cr>", "search buffers" },
-        ["<space>st"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
-        ["<space>sh"] = { "<cmd> Telescope help_tags <cr>", "search page" },
-        ["<space>sr"] = { "<cmd> Telescope oldfiles <cr>", "search oldfiles" },
-        ["<space>s:"] = { "<cmd> Telescope oldfiles <cr>", "search commands" },
+        ["<space>f"] = {
+            function()
+                require("telescope.builtin").find_files()
+            end,
+            "search files",
+        },
+        ["<space>g"] = {
+            function()
+                require("telescope.builtin").live_grep()
+            end,
+            "live grep",
+        },
+        ["<space>b"] = {
+            function()
+                require("telescope.builtin").buffers()
+            end,
+            "search buffers",
+        },
+        ["<space>n"] = {
+            function()
+                require("telescope.builtin").current_buffer_fuzzy_find()
+            end,
+            "search current buffer content",
+        },
+        ["<space>st"] = {
+            function()
+                require("telescope.builtin").treesitter()
+            end,
+            "search treesitter",
+        },
+        ["<space>sh"] = {
+            function()
+                require("telescope.builtin").help_tags()
+            end,
+            "search page",
+        },
+        ["<space>sr"] = {
+            function()
+                require("telescope.builtin").oldfiles()
+            end,
+            "search oldfiles",
+        },
+        ["<space>s;"] = {
+            function()
+                require("telescope.builtin").commands()
+            end,
+            "search commands",
+        },
 
         -- -- git
         -- ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "git commits" },
@@ -322,29 +465,19 @@ M.telescope = {
     },
 }
 
-local zenmode_loaded = false
-local load_zenmode = function()
-    if zenmode_loaded == false then
-        packadd "zen-mode.nvim"
-        packadd "twilight.nvim"
-        require "pkgs.configs.mod-zenmode"
-        zenmode_loaded = true
-    end
-end
-M.zenmode = {
+m.zenmode = {
     pkg = true,
     n = {
         ["<space>oz"] = {
             function()
-                load_zenmode()
-                cmd "ZenMode"
+                cmd("ZenMode")
             end,
             "toggle zen mode",
         },
     },
 }
 
-M.zk = {
+m.zk = {
     pkg = true,
     n = {
         ["<space>zn"] = { "<cmd> ZkNew { title = vim.fn.input('Title: ') } <cr>", "new note" },
@@ -361,68 +494,68 @@ M.zk = {
     },
 }
 
-M.gitsigns = {
-  pkg = true,
+m.gitsigns = {
+    pkg = true,
 
-  n = {
-    -- Navigation through hunks
-    ["]c"] = {
-      function()
-        if vim.wo.diff then
-          return "]c"
-        end
-        vim.schedule(function()
-          require("gitsigns").next_hunk()
-        end)
-        return "<Ignore>"
-      end,
-      "Jump to next hunk",
-      opts = { expr = true },
-    },
-
-    ["[c"] = {
-      function()
-        if vim.wo.diff then
-          return "[c"
-        end
-        vim.schedule(function()
-          require("gitsigns").prev_hunk()
-        end)
-        return "<Ignore>"
-      end,
-      "Jump to prev hunk",
-      opts = { expr = true },
-    },
-
-    -- Actions
-    ["<leader>rh"] = {
-      function()
-        require("gitsigns").reset_hunk()
-      end,
-      "Reset hunk",
-    },
-
-    ["<leader>ph"] = {
-      function()
-        require("gitsigns").preview_hunk()
-      end,
-      "Preview hunk",
-    },
-
-    ["<leader>gb"] = {
-      function()
-        package.loaded.gitsigns.blame_line()
-      end,
-      "Blame line",
-    },
-
-    ["<leader>td"] = {
-      function()
-        require("gitsigns").toggle_deleted()
-      end,
-      "Toggle deleted",
-    },
-  },
+    -- n = {
+    --     -- Navigation through hunks
+    --     ["]c"] = {
+    --         function()
+    --             if vim.wo.diff then
+    --                 return "]c"
+    --             end
+    --             vim.schedule(function()
+    --                 require("gitsigns").next_hunk()
+    --             end)
+    --             return "<Ignore>"
+    --         end,
+    --         "Jump to next hunk",
+    --         opts = { expr = true },
+    --     },
+    --
+    --     ["[c"] = {
+    --         function()
+    --             if vim.wo.diff then
+    --                 return "[c"
+    --             end
+    --             vim.schedule(function()
+    --                 require("gitsigns").prev_hunk()
+    --             end)
+    --             return "<Ignore>"
+    --         end,
+    --         "Jump to prev hunk",
+    --         opts = { expr = true },
+    --     },
+    --
+    --     -- Actions
+    --     ["<leader>rh"] = {
+    --         function()
+    --             require("gitsigns").reset_hunk()
+    --         end,
+    --         "Reset hunk",
+    --     },
+    --
+    --     ["<leader>ph"] = {
+    --         function()
+    --             require("gitsigns").preview_hunk()
+    --         end,
+    --         "Preview hunk",
+    --     },
+    --
+    --     ["<leader>gb"] = {
+    --         function()
+    --             package.loaded.gitsigns.blame_line()
+    --         end,
+    --         "Blame line",
+    --     },
+    --
+    --     ["<leader>td"] = {
+    --         function()
+    --             require("gitsigns").toggle_deleted()
+    --         end,
+    --         "Toggle deleted",
+    --     },
+    -- },
 }
 
-return M
+return m

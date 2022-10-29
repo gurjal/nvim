@@ -24,20 +24,15 @@ opt.mouse = "a"
 
 -- window
 opt.cmdheight = 0
-opt.showtabline = 1
-opt.numberwidth = 1
-opt.ruler = false
-opt.laststatus = 2
+-- opt.showtabline = 1
+-- opt.numberwidth = 4
+opt.laststatus = 0
 opt.signcolumn = "yes:1"
 opt.title = true
 opt.titleold = "st"
 opt.splitbelow = true
 opt.splitright = true
 opt.termguicolors = true
--- vim.api.nvim_command(
--- [[au vimenter * hi Normal guibg=NONE ctermbg=NONE
---   au vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE]]
--- )
 
 -- backup, undo and swap
 opt.undofile = true
@@ -56,19 +51,14 @@ opt.completeopt = "menu,menuone,noselect"
 opt.wildmode = { "list", "longest" }
 opt.hidden = true
 opt.list = true
-opt.lazyredraw = true
-cmd([[aug vimrc-incsearch-highlight
-    au!
-    au CmdlineEnter /,\? set hlsearch
-    au CursorMoved * set nohlsearch
-  aug END]])
+opt.lazyredraw = false
 
 -- formatting
 opt.formatoptions = "tcrql"
 opt.joinspaces = false
 vim.g.rust_recommended_style = 0
 
-g.mapleader = "'"
+g.mapleader = ","
 
 -- disable some builtin vim plugins
 local default_plugins = {
