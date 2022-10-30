@@ -1,30 +1,17 @@
 -- autocmds
-local cmd = vim.cmd
 local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
-autocmd("UIEnter", {
-    callback = function()
-        require("colo.everforest")
-    end,
-})
+autocmd("UIEnter", { callback = function() pcall(require, "colo.tokyo_night") end })
+
+local aug_recording = augroup("recording", { clear = true })
+
+autocmd("RecordingEnter", { group = aug_recording, callback = function() require("notify")("recording...") end })
+autocmd("RecordingLeave", { group = aug_recording, callback = function() require("notify")("done") end })
 
 -- dont list quickfix buffers
-autocmd("FileType", {
-    pattern = "qf",
-    callback = function()
-        vim.opt_local.buflisted = false
-    end,
-})
+autocmd("FileType", { pattern = "qf", callback = function() vim.opt_local.buflisted = false end })
 
--- cmd([[
---     au vimenter * hi Normal guibg=NONE ctermbg=NONE
---     au vimenter * hi EndOfBuffer guibg=NONE ctermbg=NONE
--- ]])
-
-cmd([[
-    aug vimrc-incsearch-highlight
-        au!
-        au CmdlineEnter /,\? set hlsearch
-        au CursorMoved * set nohlsearch
-    aug END
-]])
+local aug_autohlsearch = augroup("autohlsearch", { clear = true })
+autocmd("CmdlineEnter", { group = aug_autohlsearch, pattern = { "/", "?" }, command = "set hlsearch" })
+autocmd("CursorMoved", { group = aug_autohlsearch, pattern = "*", command = "set nohlsearch" })

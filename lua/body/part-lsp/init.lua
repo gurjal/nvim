@@ -1,8 +1,8 @@
 local servers = require("body.part-lsp.servers")
 
-local m = {}
+local M = {}
 
-m.init_lspconfig = function()
+M.init_lspconfig = function()
     local conf_lspconfig = require("body.part-lsp.conf-lspconfig")
     conf_lspconfig.setup()
     servers.on_attach = conf_lspconfig.on_attach
@@ -10,11 +10,11 @@ m.init_lspconfig = function()
     servers.init()
 end
 
-m.init_cmp = function()
+M.init_cmp = function()
     local conf_cmp = require("body.part-lsp.conf-cmp")
     conf_cmp.setup()
     servers.capabilities = conf_cmp.capabilities
     servers.init()
 end
 
-return m
+return M

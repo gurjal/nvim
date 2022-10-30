@@ -1,10 +1,4 @@
-local opt = vim.opt
-
-local m = {}
-
-local alive = false
-
-local status = false
+local M = {}
 
 local options = {
     bufferline = false, -- enable bufferline
@@ -28,27 +22,6 @@ local options = {
     },
 }
 
-local load = function()
-    require("packer").loader("nvim-hardline")
-end
+M.init = function() require("hardline").setup(options) end
 
-local init = function()
-    m.alive = true
-    require("hardline").setup(options)
-end
-
-m.toggle = function()
-    if status == false then
-        if alive == false then
-            -- load()
-            init()
-        end
-        opt.laststatus = 3
-        status = true
-    else
-        opt.laststatus = 0
-        status = false
-    end
-end
-
-return m
+return M

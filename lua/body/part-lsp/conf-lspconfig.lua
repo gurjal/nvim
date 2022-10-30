@@ -1,16 +1,16 @@
 local utils = require("core.utils")
 
-local m = {}
+local M = {}
 
-m.on_attach = function(client, bufnr)
+M.on_attach = function(client, bufnr)
     client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
     utils.load_mappings("lspconfig", { buffer = bufnr })
 end
 
-m.capabilities = vim.lsp.protocol.make_client_capabilities()
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
-m.setup = function()
+M.setup = function()
     local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
     for type, icon in pairs(signs) do
         local hl = "DiagnosticSign" .. type
@@ -18,4 +18,4 @@ m.setup = function()
     end
 end
 
-return m
+return M

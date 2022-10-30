@@ -1,13 +1,6 @@
-local m = {}
+local M = {}
 
-local alive = false
-
-local status = false
-
-m.toggle = function()
-end
-
-m.setup = function()
+M.init = function()
     require("formatter").setup({
         filetype = {
             lua = { require("body.part-formatter.lang.formatter-lua") },
@@ -19,4 +12,4 @@ m.setup = function()
     })
 end
 
-return m
+return M

@@ -1,6 +1,6 @@
 local cmp = require("cmp")
 
-local m = {}
+local M = {}
 
 local options = {
     snippet = {
@@ -62,7 +62,7 @@ local options = {
     },
 }
 
-m.setup = function()
+M.setup = function()
     vim.o.completeopt = "menu,menuone,noselect"
 
     cmp.setup(options)
@@ -95,6 +95,6 @@ m.setup = function()
     })
 end
 
-m.capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
+M.capabilities = require("cmp_nvim_lsp").default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-return m
+return M

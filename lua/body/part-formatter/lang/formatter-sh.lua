@@ -2,7 +2,8 @@ return function()
     return {
         exe = "shfmt",
         args = {
-            "-i",
+            "--func-next-line",
+            "--indent",
             vim.opt.tabstop:get(),
         },
         stdin = true,

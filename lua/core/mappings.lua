@@ -1,15 +1,15 @@
 local cmd = vim.cmd
+
 local api = vim.api
-local opt = vim.opt
 
-local m = {}
+local M = {}
 
-m.general = {
+M.general = {
     i = {
         ["jk"] = { "<esc>", "escape sequence" },
         ["kj"] = { "<esc>", "escape sequence" },
 
-        -- go to  beginning and end
+        -- go to beginning and end
         ["<c-b>"] = { "<ESC>^i", "beginning of line" },
         ["<c-e>"] = { "<End>", "end of line" },
 
@@ -24,43 +24,24 @@ m.general = {
         -- save
         ["<space>w"] = { "<cmd> w <CR>", "save" },
         ["<space>q"] = { "<cmd> wq <CR>", "save and quit" },
-        ["<space>Q"] = { "<cmd> q! <CR>", "force quit" },
+        ["<space>x"] = { "<cmd> q! <CR>", "force quit" },
         ["<space>c"] = { "<cmd> bd <CR>", "close buffer" },
 
-        ["<space><space>"] = {
-            function()
-                require("body.part-hardline").toggle()
-            end,
-            "toggle status line",
-        },
-
         -- switch between windows
+        ["<space>n"] = { "<c-w>w", "next window" },
+        ["<space>p"] = { "<c-w>W", "previous window" },
         ["<c-h>"] = { "<c-w>h", "window left" },
         ["<c-l>"] = { "<c-w>l", "window right" },
         ["<c-j>"] = { "<c-w>j", "window down" },
         ["<c-k>"] = { "<c-w>k", "window up" },
 
+        -- goto line
+        ["gh"] = { "0", "goto beginning of line" },
+        ["gl"] = { "$", "goto end of line" },
+
         -- search highlights
         ["n"] = { "n<cmd> set hlsearch <cr>", "next search result" },
         ["N"] = { "N<cmd> set hlsearch <cr>", "previous search result" },
-
-        -- add line
-        ["[<space>"] = {
-            function()
-                local cursor_pos = api.nvim_win_get_cursor(0)
-                cmd.normal("O")
-                api.nvim_win_set_cursor(0, { cursor_pos[1] + 1, cursor_pos[2] })
-            end,
-            "prepend line",
-        },
-        ["]<space>"] = {
-            function()
-                local cursor_pos = api.nvim_win_get_cursor(0)
-                cmd.normal("o")
-                api.nvim_win_set_cursor(0, cursor_pos)
-            end,
-            "append line",
-        },
 
         -- Allow moving the cursor through wrapped lines with j, k, <Up> and <Down>
         -- http://www.reddit.com/r/vim/comments/2k4cbr/problem_with_gj_and_gk/
@@ -73,50 +54,55 @@ m.general = {
 
         -- new buffer
         ["<tab>"] = { "<cmd> bnext <cr>", "next buffer" },
-        ["<s-tab>"] = { "<cmd> bprevious <cr>", "previous buffer" },
+        ["<s-tab>"] = { "<cmd> bprev <cr>", "previous buffer" },
 
-        -- scroll mode
-        ["<space>oy"] = {
+        -- append line
+        ["]<space>"] = {
             function()
-                if opt.scrolloff:get() ~= 9999 then
-                    opt.scrolloff = 9999
-                    require("notify")("scroll mode is on")
-                else
-                    opt.scrolloff = 4
-                    require("notify")("scroll mode is off")
-                end
+                local cursor_pos = api.nvim_win_get_cursor(0)
+                cmd.normal("o")
+                api.nvim_win_set_cursor(0, cursor_pos)
             end,
+            "append line",
+        },
+
+        -- prepend line
+        ["[<space>"] = {
+            function()
+                local cursor_pos = api.nvim_win_get_cursor(0)
+                cmd.normal("O")
+                api.nvim_win_set_cursor(0, { cursor_pos[1] + 1, cursor_pos[2] })
+            end,
+            "prepend line",
+        },
+
+        ["<leader>m"] = {
+            function() require("body.part-whichkey").init() end,
+            "start which key",
+        },
+
+        ["<leader>b"] = {
+            function() require("body.part-utils.hardline").toggle() end,
+            "toggle status line",
+        },
+
+        ["<leader>y"] = {
+            function() require("body.part-utils.scroll_mode").toggle() end,
             "toggle scroll mode",
         },
 
-        ["<space>on"] = {
-            function()
-                if vim.opt.number:get() == false then
-                    cmd.set("nu rnu")
-                    require("notify")("line numbers are on")
-                else
-                    cmd.set("nonu nornu")
-                    require("notify")("line numbers are off")
-                end
-            end,
+        ["<leader>n"] = {
+            function() require("body.part-utils.line_numbers").toggle() end,
             "toggle line numbers",
         },
 
-        ["<space>ow"] = {
-            function()
-                if vim.opt.wrap:get() == false then
-                    opt.wrap = true
-                    require("notify")("line wrapping is on")
-                else
-                    opt.wrap = false
-                    require("notify")("line wrapping is off")
-                end
-            end,
+        ["<leader>w"] = {
+            function() require("body.part-utils.line_wrap").toggle() end,
             "toggle line wrapping",
         },
 
-        ["<space>ol"] = { "<cmd> LspStart <cr>", "start lsp" },
-        ["<space>oL"] = { "<cmd> LspStop <cr>", "stop lsp" },
+        ["<leader>l"] = { "<cmd> LspStart <cr>", "start lsp" },
+        ["<leader>L"] = { "<cmd> LspStop <cr>", "stop lsp" },
     },
 
     v = {
@@ -133,71 +119,26 @@ m.general = {
     },
 }
 
--- m.neotree = {
---     pkg = true,
---     n = {
---         ["<space>e"] = { "<cmd> Neotree action=focus toggle=true <cr>", "toggle file explorer" },
---         ["<leader>e"] = { "<cmd> Neotree action=focus <cr>", "toggle file explorer" },
---     },
--- }
-
-m.chadtree = {
+M.neotree = {
     pkg = true,
-    n = {
-        ["<space>e"] = { "<cmd> CHADopen <cr>", "toggle file explorer" },
-        -- ["<leader>e"] = { "<cmd> Neotree action=focus <cr>", "toggle file explorer" },
-    },
+    n = { ["<space>e"] = { "<cmd> Neotree action=focus toggle=true <cr>", "toggle file explorer" } },
 }
 
-m.sidebar = {
+M.leap_ast = {
     pkg = true,
-    n = {
-        ["<space>t"] = { "<cmd> SidebarNvimToggle <cr> <cmd> SidebarNvimFocus <cr>", "open sidebar" },
-        ["<leader>t"] = { "<cmd> SidebarNvimFocus <cr>", "focus sidebar" },
-    },
+    n = { ["<space>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
+    x = { ["<space>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
+    o = { ["<space>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
 }
 
-m.leap_ast = {
+M.comment = {
     pkg = true,
-    n = {
-        ["<space>p"] = {
-            function()
-                require("leap-ast").leap()
-            end,
-            "leap to node",
-        },
-    },
-    x = {
-        ["<space>p"] = {
-            function()
-                require("leap-ast").leap()
-            end,
-            "leap to node",
-        },
-    },
-    o = {
-        ["<space>p"] = {
-            function()
-                require("leap-ast").leap()
-            end,
-            "leap to node",
-        },
-    },
-}
-
-m.comment = {
-    pkg = true,
-
-    -- toggle comment in both modes
     n = {
         ["<space>/"] = {
-            function()
-                require("Comment.api").toggle.linewise.current()
-            end,
+            function() require("Comment.api").toggle.linewise.current() end,
             "toggle comment",
         },
     },
-
     v = {
         ["<space>/"] = {
             "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
@@ -206,278 +147,68 @@ m.comment = {
     },
 }
 
--- m.coq = {
---     pkg = true,
---     i = {
---         ["<Esc>"] = { 'pumvisible() ? "<c-e><Esc>" : "<Esc>" <cr>', "" },
---         ["<a-c>"] = { '<cmd> echo pumvisible() ? "<c-e><c-c>" : "<c-c>" <cr>', "" },
---         ["<BS>"] = { '<cmd> echo pumvisible() ? "<c-e><BS>"  : "<BS>" <cr>', "" },
---         ["<CR>"] = {
---             '<cmd> echo pumvisible() ? (complete_info().selected == -1 ? "<c-n><c-y>" : "<c-y>") : "<CR>" <cr>',
---             "",
---         },
---         ["<Tab>"] = { '<cmd> echo pumvisible() ? "<c-n>" : "<Tab>" <cr>', "" },
---         ["<S-Tab>"] = { '<cmd> echo pumvisible() ? "<c-p>" : "<BS>" <cr>', "" },
---     },
--- }
-
-m.lspconfig = {
+M.lspconfig = {
     pkg = true,
-
     n = {
-        ["gD"] = {
-            function()
-                vim.lsp.buf.declaration()
-            end,
-            "lsp declaration",
-        },
-
-        ["<space>k"] = {
-            function()
-                vim.lsp.buf.hover()
-            end,
-            "lsp hover",
-        },
-
-        ["<space>d"] = {
-            function()
-                vim.diagnostic.open_float()
-            end,
-            "floating diagnostic",
-        },
-
-        ["<c-n>"] = {
-            function()
-                vim.diagnostic.goto_next()
-            end,
-            "goto_next",
-        },
-
-        ["<c-p>"] = {
-            function()
-                vim.diagnostic.goto_prev()
-            end,
-            "goto prev",
-        },
-
-        ["<space>ls"] = {
-            function()
-                vim.lsp.buf.signature_help()
-            end,
-            "lsp signature_help",
-        },
-
-        ["<space>lr"] = {
-            function()
-                vim.lsp.buf.rename()
-            end,
-            "lsp rename",
-        },
-
-        ["<leader>lc"] = {
-            function()
-                vim.lsp.buf.code_action()
-            end,
-            "lsp code_action",
-        },
-
-        ["<space>lq"] = {
-            function()
-                vim.diagnostic.setloclist()
-            end,
-            "diagnostic setloclist",
-        },
-
-        ["<space>lf"] = {
-            function()
-                vim.lsp.buf.format({ async = true })
-            end,
-            "lsp formatting",
-        },
-
-        ["<space>lwa"] = {
-            function()
-                vim.lsp.buf.add_workspace_folder()
-            end,
-            "add workspace folder",
-        },
-
-        ["<space>lwr"] = {
-            function()
-                vim.lsp.buf.remove_workspace_folder()
-            end,
-            "remove workspace folder",
-        },
-
+        ["<space>k"] = { function() vim.lsp.buf.hover() end, "lsp hover" },
+        ["<c-n>"] = { function() vim.diagnostic.goto_next() end, "goto next diagnostics" },
+        ["<c-p>"] = { function() vim.diagnostic.goto_prev() end, "goto prev diagnostics" },
+        ["<space>d"] = { function() vim.diagnostic.open_float() end, "floating diagnostic" },
+        ["gD"] = { function() vim.lsp.buf.declaration() end, "lsp declaration" },
+        ["<space>ls"] = { function() vim.lsp.buf.signature_help() end, "lsp signature help" },
+        ["<space>lr"] = { function() vim.lsp.buf.rename() end, "lsp rename" },
+        ["<space>lc"] = { function() vim.lsp.buf.code_action() end, "lsp code action" },
+        ["<space>lq"] = { function() vim.diagnostic.setloclist() end, "diagnostic setloclist" },
+        ["<space>lf"] = { "<cmd> Format <cr>", "lsp formatting" },
+        ["<space>lwa"] = { function() vim.lsp.buf.add_workspace_folder() end, "add workspace folder" },
+        ["<space>lwr"] = { function() vim.lsp.buf.remove_workspace_folder() end, "remove workspace folder" },
         ["<space>lwl"] = {
-            function()
-                print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
-            end,
+            function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
             "list workspace folders",
         },
-
-        ["gd"] = {
-            function()
-                require("telescope.builtin").lsp_definitions()
-            end,
-            "lsp definition",
-        },
-        ["gi"] = {
-            function()
-                require("telescope.builtin").lsp_implementations()
-            end,
-            "lsp implementation",
-        },
-        ["gr"] = {
-            function()
-                require("telescope.builtin").lsp_references()
-            end,
-            "lsp references",
-        },
-        ["gt"] = {
-            function()
-                require("telescope.builtin").lsp_type_definitions()
-            end,
-            "lsp definition type",
-        },
-        ["<space>sd"] = {
-            function()
-                require("telescope.builtin").diagnostics()
-            end,
-            "search lsp diagnostics",
-        },
-        ["<space>ss"] = {
-            function()
-                require("telescope.builtin").lsp_document_symbols()
-            end,
-            "search lsp document symbols",
-        },
-        ["<space>sw"] = {
-            function()
-                require("telescope.builtin").lsp_dynamic_workspace_symbols()
-            end,
-            "search lsp workspace symbols",
-        },
-        ["<space>si"] = {
-            function()
-                require("telescope.builtin").lsp_incoming_calls()
-            end,
-            "search lsp incoming calls",
-        },
-        ["<space>so"] = {
-            function()
-                require("telescope.builtin").lsp_outgoing_calls()
-            end,
-            "search lsp outgoing calls",
-        },
+        ["gd"] = { "<cmd> Telescope lsp_definitions <cr>", "lsp definition" },
+        ["gi"] = { "<cmd> Telescope lsp_implementations <cr>", "lsp implementation" },
+        ["gr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
+        ["gt"] = { "<cmd> Telescope lsp_type_definitions <cr>", "lsp definition type" },
+        ["<space>sd"] = { "<cmd> Telescope diagnostics <cr>", "search lsp diagnostics" },
+        ["<space>ss"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
+        ["<space>sw"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
+        ["<space>si"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
+        ["<space>so"] = { "<cmd> Telescope lsp_outgoing_calls <cr>", "search lsp outgoing calls" },
     },
 }
 
-local autoformatting_status = false
-m.formatter = {
+M.formatter = {
     pkg = true,
     n = {
-        ["<space>of"] = {
-            function()
-                if autoformatting_status == false then
-                    autoformatting_status = true
-                    cmd([[
-                    augroup FormatAutogroup
-                        autocmd!
-                        autocmd BufWritePost * FormatWrite
-                    augroup END
-                    ]])
-                    require("notify")("autoformatting is on")
-                else
-                    autoformatting_status = false
-                    cmd("autocmd! FormatAutogroup")
-                    require("notify")("autoformatting is off")
-                end
-            end,
+        ["<leader>f"] = {
+            function() require("body.part-utils.autoformat").toggle() end,
             "toggle autoformatting",
         },
     },
 }
 
-m.telescope = {
+M.telescope = {
     pkg = true,
-
     n = {
-        -- find
-        ["<space>f"] = {
-            function()
-                require("telescope.builtin").find_files()
-            end,
-            "search files",
-        },
-        ["<space>g"] = {
-            function()
-                require("telescope.builtin").live_grep()
-            end,
-            "live grep",
-        },
-        ["<space>b"] = {
-            function()
-                require("telescope.builtin").buffers()
-            end,
-            "search buffers",
-        },
-        ["<space>n"] = {
-            function()
-                require("telescope.builtin").current_buffer_fuzzy_find()
-            end,
-            "search current buffer content",
-        },
-        ["<space>st"] = {
-            function()
-                require("telescope.builtin").treesitter()
-            end,
-            "search treesitter",
-        },
-        ["<space>sh"] = {
-            function()
-                require("telescope.builtin").help_tags()
-            end,
-            "search page",
-        },
-        ["<space>sr"] = {
-            function()
-                require("telescope.builtin").oldfiles()
-            end,
-            "search oldfiles",
-        },
-        ["<space>s;"] = {
-            function()
-                require("telescope.builtin").commands()
-            end,
-            "search commands",
-        },
-
-        -- -- git
-        -- ["<leader>cm"] = { "<cmd> Telescope git_commits <CR>", "git commits" },
-        -- ["<leader>gt"] = { "<cmd> Telescope git_status <CR>", "git status" },
-
-        -- -- pick a hidden term
-        -- ["<leader>pt"] = { "<cmd> Telescope terms <CR>", "pick hidden term" },
-
-        -- -- theme switcher
-        -- ["<leader>th"] = { "<cmd> Telescope themes <CR>", "nvchad themes" },
+        ["<space>f"] = { "<cmd> Telescope find_files <cr>", "search files" },
+        ["<space>g"] = { "<cmd> Telescope live_grep <cr>", "live grep" },
+        ["<space>b"] = { "<cmd> Telescope buffers <cr>", "search buffers" },
+        ["<space>st"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
+        ["<space>sh"] = { "<cmd> Telescope help_tags <cr>", "search page" },
+        ["<space>sr"] = { "<cmd> Telescope oldfiles <cr>", "search oldfiles" },
+        ["<space>s;"] = { "<cmd> Telescope commands <cr>", "search commands" },
     },
 }
 
-m.zenmode = {
+M.zenmode = {
     pkg = true,
     n = {
-        ["<space>oz"] = {
-            function()
-                cmd("ZenMode")
-            end,
-            "toggle zen mode",
-        },
+        ["<leader>z"] = { function() cmd("ZenMode") end, "toggle zen mode" },
     },
 }
 
-m.zk = {
+M.zk = {
     pkg = true,
     n = {
         ["<space>zn"] = { "<cmd> ZkNew { title = vim.fn.input('Title: ') } <cr>", "new note" },
@@ -494,7 +225,7 @@ m.zk = {
     },
 }
 
-m.gitsigns = {
+M.gitsigns = {
     pkg = true,
 
     -- n = {
@@ -558,4 +289,4 @@ m.gitsigns = {
     -- },
 }
 
-return m
+return M

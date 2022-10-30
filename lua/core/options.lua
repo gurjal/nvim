@@ -1,6 +1,6 @@
+local g = vim.g
 local cmd = vim.cmd
 local opt = vim.opt
-local g = vim.g
 
 -- base
 opt.number = true
@@ -12,7 +12,7 @@ opt.expandtab = true
 opt.textwidth = 100
 opt.wrap = false
 opt.wrapmargin = 0
-opt.scrolloff = 4
+opt.scrolloff = 2
 opt.sidescrolloff = 8
 opt.autoindent = true
 opt.smartindent = true
@@ -24,14 +24,14 @@ opt.mouse = "a"
 
 -- window
 opt.cmdheight = 0
--- opt.showtabline = 1
--- opt.numberwidth = 4
+opt.showtabline = 1
+opt.numberwidth = 4
 opt.laststatus = 0
 opt.signcolumn = "yes:1"
 opt.title = true
 opt.titleold = "st"
-opt.splitbelow = true
-opt.splitright = true
+opt.splitbelow = false
+opt.splitright = false
 opt.termguicolors = true
 
 -- backup, undo and swap
@@ -56,7 +56,7 @@ opt.lazyredraw = false
 -- formatting
 opt.formatoptions = "tcrql"
 opt.joinspaces = false
-vim.g.rust_recommended_style = 0
+g.rust_recommended_style = 0
 
 g.mapleader = ","
 
@@ -102,5 +102,5 @@ local default_providers = {
 }
 
 for _, provider in ipairs(default_providers) do
-    vim.g["loaded_" .. provider .. "_provider"] = 0
+    g["loaded_" .. provider .. "_provider"] = 0
 end
