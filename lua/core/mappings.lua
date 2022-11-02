@@ -23,8 +23,8 @@ M.general = {
     n = {
         -- save
         ["<space>w"] = { "<cmd> w <CR>", "save" },
-        ["<space>q"] = { "<cmd> wq <CR>", "save and quit" },
-        ["<space>x"] = { "<cmd> q! <CR>", "force quit" },
+        ["<space><space>"] = { "<cmd> wq <CR>", "save and quit" },
+        ["<space>q"] = { "<cmd> q! <CR>", "force quit" },
         ["<space>c"] = { "<cmd> bd <CR>", "close buffer" },
 
         -- switch between windows
@@ -159,7 +159,6 @@ M.lspconfig = {
         ["<space>lr"] = { function() vim.lsp.buf.rename() end, "lsp rename" },
         ["<space>lc"] = { function() vim.lsp.buf.code_action() end, "lsp code action" },
         ["<space>lq"] = { function() vim.diagnostic.setloclist() end, "diagnostic setloclist" },
-        ["<space>lf"] = { "<cmd> Format <cr>", "lsp formatting" },
         ["<space>lwa"] = { function() vim.lsp.buf.add_workspace_folder() end, "add workspace folder" },
         ["<space>lwr"] = { function() vim.lsp.buf.remove_workspace_folder() end, "remove workspace folder" },
         ["<space>lwl"] = {
@@ -181,6 +180,7 @@ M.lspconfig = {
 M.formatter = {
     pkg = true,
     n = {
+        ["<leader>F"] = { "<cmd> Format <cr>", "lsp formatting" },
         ["<leader>f"] = {
             function() require("body.part-utils.autoformat").toggle() end,
             "toggle autoformatting",

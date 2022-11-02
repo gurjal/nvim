@@ -2,10 +2,12 @@ local lspconfig = require("lspconfig")
 
 local M = {}
 
-M.on_attach = nil
-M.capabilities = nil
+local on_attach = nil
+local capabilities = nil
 
-M.init = function()
+M.init = function(_on_attach, _capabilities )
+    on_attach=_on_attach
+    capabilities=_capabilities
     M.lua()
     M.c()
     M.rust()
@@ -16,8 +18,8 @@ end
 M.lua = function()
     -- lua
     lspconfig["sumneko_lua"].setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
+        on_attach = on_attach,
+        capabilities = capabilities,
         settings = {
             Lua = {
                 diagnostics = {
@@ -39,16 +41,16 @@ end
 M.c = function()
     -- c, cpp
     lspconfig["clangd"].setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
+        on_attach = on_attach,
+        capabilities = capabilities,
     })
 end
 
 M.rust = function()
     -- rust
     lspconfig["rust_analyzer"].setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
+        on_attach = on_attach,
+        capabilities = capabilities,
         settings = {
             ["rust-analyzer"] = {
                 assist = {
@@ -69,16 +71,16 @@ end
 M.python = function()
     -- python
     lspconfig["pyright"].setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
+        on_attach = on_attach,
+        capabilities = capabilities,
     })
 end
 
 M.arduino = function()
     -- arduino
     lspconfig["arduino_language_server"].setup({
-        on_attach = M.on_attach,
-        capabilities = M.capabilities,
+        on_attach = on_attach,
+        capabilities = capabilities,
         cmd = {
             "arduino-language-server",
             "-cli-config",

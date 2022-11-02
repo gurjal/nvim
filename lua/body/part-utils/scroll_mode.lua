@@ -1,3 +1,4 @@
+local cmd = vim.cmd
 local opt = vim.opt
 local M = {}
 
@@ -11,6 +12,7 @@ M.toggle = function()
         opt.scrolloff = user_scrolloff
         require("notify")("scroll mode is off")
     else
+        cmd.normal("M")
         opt.scrolloff = 9999
         require("notify")("scroll mode is on")
     end

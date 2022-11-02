@@ -10,7 +10,7 @@ end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
 
-M.setup = function()
+M.init = function()
     local signs = { Error = " ", Warn = " ", Hint = " ", Info = " " }
     for type, icon in pairs(signs) do
         local hl = "DiagnosticSign" .. type

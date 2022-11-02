@@ -62,7 +62,7 @@ local options = {
     },
 }
 
-M.setup = function()
+M.init = function()
     vim.o.completeopt = "menu,menuone,noselect"
 
     cmp.setup(options)
