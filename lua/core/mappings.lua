@@ -22,10 +22,13 @@ M.general = {
 
     n = {
         -- save
-        ["<space>w"] = { "<cmd> w <CR>", "save" },
-        ["<space><space>"] = { "<cmd> wq <CR>", "save and quit" },
-        ["<space>q"] = { "<cmd> q! <CR>", "force quit" },
-        ["<space>c"] = { "<cmd> bd <CR>", "close buffer" },
+        ["<leader>w"] = { "<cmd> w <cr>", "save" },
+        ["<leader>q"] = { "<cmd> q! <cr>", "force quit" },
+        ["<leader>c"] = { "<cmd> bd <cr>", "close buffer" },
+        ["<leader><space>"] = { "<cmd> wq <cr>", "save and quit" },
+        ["<space><leader>"] = { "<cmd> wq <cr>", "save and quit" },
+
+        ["<space><space>"] = { "<cmd> normal zz <cr>", "center line" },
 
         -- switch between windows
         ["<space>n"] = { "<c-w>w", "next window" },
@@ -53,8 +56,10 @@ M.general = {
         ["<Down>"] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', opts = { expr = true } },
 
         -- new buffer
-        ["<tab>"] = { "<cmd> bnext <cr>", "next buffer" },
-        ["<s-tab>"] = { "<cmd> bprev <cr>", "previous buffer" },
+        ["\\"] = { "<cmd> bnext <cr>", "next buffer" },
+        ["|"] = { "<cmd> bprev <cr>", "previous buffer" },
+        ["J"] = { "<cmd> bnext <cr>", "next buffer" },
+        ["K"] = { "<cmd> bprev <cr>", "previous buffer" },
 
         -- append line
         ["]<space>"] = {
@@ -76,7 +81,7 @@ M.general = {
             "prepend line",
         },
 
-        ["<leader>m"] = {
+        ["<leader>k"] = {
             function() require("body.part-whichkey").init() end,
             "start which key",
         },
@@ -96,10 +101,10 @@ M.general = {
             "toggle line numbers",
         },
 
-        ["<leader>w"] = {
-            function() require("body.part-utils.line_wrap").toggle() end,
-            "toggle line wrapping",
-        },
+        -- ["<leader>w"] = {
+        --     function() require("body.part-utils.line_wrap").toggle() end,
+        --     "toggle line wrapping",
+        -- },
 
         ["<leader>l"] = { "<cmd> LspStart <cr>", "start lsp" },
         ["<leader>L"] = { "<cmd> LspStop <cr>", "stop lsp" },
@@ -169,9 +174,9 @@ M.lspconfig = {
         ["gi"] = { "<cmd> Telescope lsp_implementations <cr>", "lsp implementation" },
         ["gr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
         ["gt"] = { "<cmd> Telescope lsp_type_definitions <cr>", "lsp definition type" },
+        ["<space>w"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
+        ["<space>W"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
         ["<space>sd"] = { "<cmd> Telescope diagnostics <cr>", "search lsp diagnostics" },
-        ["<space>ss"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
-        ["<space>sw"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
         ["<space>si"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
         ["<space>so"] = { "<cmd> Telescope lsp_outgoing_calls <cr>", "search lsp outgoing calls" },
     },
@@ -180,12 +185,15 @@ M.lspconfig = {
 M.formatter = {
     pkg = true,
     n = {
-        ["<leader>F"] = { "<cmd> Format <cr>", "lsp formatting" },
+        ["<leader>F"] = { "<cmd> Format <cr>", "format document" },
         ["<leader>f"] = {
             function() require("body.part-utils.autoformat").toggle() end,
             "toggle autoformatting",
         },
     },
+    v = {
+        ["<leader>f"] = { "<cmd> '<,'>Format <cr>", "format selection" },
+    }
 }
 
 M.telescope = {
@@ -194,7 +202,7 @@ M.telescope = {
         ["<space>f"] = { "<cmd> Telescope find_files <cr>", "search files" },
         ["<space>g"] = { "<cmd> Telescope live_grep <cr>", "live grep" },
         ["<space>b"] = { "<cmd> Telescope buffers <cr>", "search buffers" },
-        ["<space>st"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
+        ["<space>w"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
         ["<space>sh"] = { "<cmd> Telescope help_tags <cr>", "search page" },
         ["<space>sr"] = { "<cmd> Telescope oldfiles <cr>", "search oldfiles" },
         ["<space>s;"] = { "<cmd> Telescope commands <cr>", "search commands" },

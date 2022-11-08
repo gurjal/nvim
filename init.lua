@@ -1,6 +1,4 @@
-vim.defer_fn(function()
-    pcall(require, "impatient")
-end, 0)
+vim.defer_fn(function() pcall(require, "impatient") end, 0)
 
 require("core")
 require("core.options")
@@ -17,3 +15,4 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require("core.utils").load_mappings()
+require("colo.nord")
