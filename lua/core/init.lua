@@ -1,9 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
--- colorscheme
--- autocmd("UIEnter", { callback = function() pcall(require, "colo.everforest") end })
-
 -- macro recording notifications
 local aug_recording = augroup("recording", { clear = true })
 autocmd("RecordingEnter", { group = aug_recording, callback = function() require("notify")("recording...") end })

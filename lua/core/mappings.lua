@@ -22,7 +22,7 @@ M.general = {
 
     n = {
         -- save
-        ["<leader>w"] = { "<cmd> w <cr>", "save" },
+        ["<leader>s"] = { "<cmd> w <cr>", "save" },
         ["<leader>q"] = { "<cmd> q! <cr>", "force quit" },
         ["<leader>c"] = { "<cmd> bd <cr>", "close buffer" },
         ["<leader><space>"] = { "<cmd> wq <cr>", "save and quit" },
@@ -33,10 +33,8 @@ M.general = {
         -- switch between windows
         ["<space>n"] = { "<c-w>w", "next window" },
         ["<space>p"] = { "<c-w>W", "previous window" },
-        ["<c-h>"] = { "<c-w>h", "window left" },
-        ["<c-l>"] = { "<c-w>l", "window right" },
-        ["<c-j>"] = { "<c-w>j", "window down" },
-        ["<c-k>"] = { "<c-w>k", "window up" },
+        ["<c-l>"] = { "<c-w>w", "next window" },
+        ["<c-h>"] = { "<c-w>W", "previous window" },
 
         -- goto line
         ["gh"] = { "0", "goto beginning of line" },
@@ -58,8 +56,8 @@ M.general = {
         -- new buffer
         ["\\"] = { "<cmd> bnext <cr>", "next buffer" },
         ["|"] = { "<cmd> bprev <cr>", "previous buffer" },
-        ["J"] = { "<cmd> bnext <cr>", "next buffer" },
-        ["K"] = { "<cmd> bprev <cr>", "previous buffer" },
+        ["<c-j>"] = { "<cmd> bnext <cr>", "next buffer" },
+        ["<c-k>"] = { "<cmd> bprev <cr>", "previous buffer" },
 
         -- append line
         ["]<space>"] = {
@@ -101,10 +99,10 @@ M.general = {
             "toggle line numbers",
         },
 
-        -- ["<leader>w"] = {
-        --     function() require("body.part-utils.line_wrap").toggle() end,
-        --     "toggle line wrapping",
-        -- },
+        ["<leader>w"] = {
+            function() require("body.part-utils.line_wrap").toggle() end,
+            "toggle line wrapping",
+        },
 
         ["<leader>l"] = { "<cmd> LspStart <cr>", "start lsp" },
         ["<leader>L"] = { "<cmd> LspStop <cr>", "stop lsp" },
@@ -193,7 +191,17 @@ M.formatter = {
     },
     v = {
         ["<leader>f"] = { "<cmd> '<,'>Format <cr>", "format selection" },
-    }
+    },
+}
+
+M.vim_easy_align = {
+    pkg = true,
+    x = {
+        ["ga"] = { "<Plug>(EasyAlign)", "align selection to char" },
+    },
+    n = {
+        ["ga"] = { "<Plug>(EasyAlign)", "align selection to char" },
+    },
 }
 
 M.telescope = {

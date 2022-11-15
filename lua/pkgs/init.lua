@@ -95,6 +95,10 @@ local pkgs = {
         config = function() require("nvim-surround").setup() end,
     },
 
+    ["junegunn/vim-easy-align"] = {
+        setup = function() require("core.utils").load_mappings("vim_easy_align") end,
+    },
+
     ["numToStr/Comment.nvim"] = {
         module = "Comment",
         config = function() require("body.part-others").comment() end,
