@@ -89,6 +89,11 @@ M.general = {
             "toggle status line",
         },
 
+        ["<leader>B"] = {
+            function() require("body.part-utils.cmdheight").toggle() end,
+            "toggle cmdheight",
+        },
+
         ["<leader>y"] = {
             function() require("body.part-utils.scroll_mode").toggle() end,
             "toggle scroll mode",
