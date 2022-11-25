@@ -20,7 +20,7 @@ M.general = {
 
     n = {
         -- save
-        ["<leader>s"] = { "<cmd> w <cr>", "save" },
+        ["<leader>w"] = { "<cmd> w <cr>", "save" },
         ["<leader>q"] = { "<cmd> q! <cr>", "force quit" },
         ["<leader>c"] = { "<cmd> bd <cr>", "close buffer" },
 
@@ -102,7 +102,7 @@ M.general = {
             "toggle line numbers",
         },
 
-        ["<leader>w"] = {
+        ["<leader>a"] = {
             function() require("body.part-utils.line_wrap").toggle() end,
             "toggle line wrapping",
         },
