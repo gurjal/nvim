@@ -100,7 +100,7 @@ local pkgs = {
     },
 
     ["numToStr/Comment.nvim"] = {
-        module = "Comment",
+        -- module = "Comment",
         config = function() require("body.part-others").comment() end,
         setup = function() require("core.utils").load_mappings("comment") end,
     },
@@ -143,6 +143,7 @@ local pkgs = {
         config = function() require("body.part-zk") end,
     },
 
+    -- themes
     ["bluz71/vim-moonfly-colors"] = { opt = true },
     ["bluz71/vim-nightfly-guicolors"] = { opt = true },
     ["embark-theme/vim"] = { as = "embark", opt = true },
@@ -151,6 +152,7 @@ local pkgs = {
     ["junegunn/seoul256.vim"] = { opt = true },
     ["rose-pine/neovim"] = { as = "rose_pine", opt = true },
     ["sainnhe/everforest"] = { opt = true },
+    ["sam4llis/nvim-tundra"] = { opt = true },
 }
 
 -- Load all pkgs

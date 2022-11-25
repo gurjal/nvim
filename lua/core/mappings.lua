@@ -1,7 +1,5 @@
 local cmd = vim.cmd
-
 local api = vim.api
-
 local M = {}
 
 M.general = {
@@ -25,10 +23,10 @@ M.general = {
         ["<leader>s"] = { "<cmd> w <cr>", "save" },
         ["<leader>q"] = { "<cmd> q! <cr>", "force quit" },
         ["<leader>c"] = { "<cmd> bd <cr>", "close buffer" },
-        ["<leader><space>"] = { "<cmd> wq <cr>", "save and quit" },
-        ["<space><leader>"] = { "<cmd> wq <cr>", "save and quit" },
 
-        ["<space><space>"] = { "<cmd> normal zz <cr>", "center line" },
+        ["<space><space>"] = { "<cmd> wq <cr>", "save and quit" },
+
+        ["<leader><leader>"] = { "<cmd> normal zz <cr>", "center line" },
 
         -- switch between windows
         ["<space>n"] = { "<c-w>w", "next window" },
@@ -163,8 +161,8 @@ M.lspconfig = {
         ["<c-p>"] = { function() vim.diagnostic.goto_prev() end, "goto prev diagnostics" },
         ["<space>d"] = { function() vim.diagnostic.open_float() end, "floating diagnostic" },
         ["gD"] = { function() vim.lsp.buf.declaration() end, "lsp declaration" },
+        ["<space>r"] = { function() vim.lsp.buf.rename() end, "lsp rename" },
         ["<space>ls"] = { function() vim.lsp.buf.signature_help() end, "lsp signature help" },
-        ["<space>lr"] = { function() vim.lsp.buf.rename() end, "lsp rename" },
         ["<space>lc"] = { function() vim.lsp.buf.code_action() end, "lsp code action" },
         ["<space>lq"] = { function() vim.diagnostic.setloclist() end, "diagnostic setloclist" },
         ["<space>lwa"] = { function() vim.lsp.buf.add_workspace_folder() end, "add workspace folder" },
@@ -175,13 +173,13 @@ M.lspconfig = {
         },
         ["gd"] = { "<cmd> Telescope lsp_definitions <cr>", "lsp definition" },
         ["gi"] = { "<cmd> Telescope lsp_implementations <cr>", "lsp implementation" },
-        ["gr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
         ["gt"] = { "<cmd> Telescope lsp_type_definitions <cr>", "lsp definition type" },
         ["<space>w"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
         ["<space>W"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
         ["<space>sd"] = { "<cmd> Telescope diagnostics <cr>", "search lsp diagnostics" },
-        ["<space>si"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
-        ["<space>so"] = { "<cmd> Telescope lsp_outgoing_calls <cr>", "search lsp outgoing calls" },
+        ["<space>lr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
+        ["<space>li"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
+        ["<space>lo"] = { "<cmd> Telescope lsp_outgoing_calls <cr>", "search lsp outgoing calls" },
     },
 }
 
