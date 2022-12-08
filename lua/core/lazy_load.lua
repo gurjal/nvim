@@ -81,15 +81,4 @@ M.treesitter_cmds = {
     "TSModuleInfo",
 }
 
-M.zk_cmds = {
-    "ZkNew",
-    "ZkNotes",
-    "ZkTags",
-    "ZkMatch",
-    "ZkNewFromTitleSelection",
-    "ZkNewFromContentSelection",
-    "ZkBacklinks",
-    "ZkLinks",
-}
-
 return M

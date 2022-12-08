@@ -227,23 +227,6 @@ M.zenmode = {
     },
 }
 
-M.zk = {
-    pkg = true,
-    n = {
-        ["<space>zn"] = { "<cmd> ZkNew { title = vim.fn.input('Title: ') } <cr>", "new note" },
-        ["<space>zo"] = { "<cmd> ZkNotes { sort = { 'modified' } }<cr>", "open note" },
-        ["<space>zt"] = { "<cmd> ZkTags <cr>", "open note by tag" },
-        ["<space>zf"] = {
-            "<cmd> ZkNotes { sort = { 'modified' }, match = vim.fn.input('Search: ') } <cr>",
-            "search notes by query",
-        },
-    },
-    v = {
-
-        ["<space>zf"] = { "<cmd> '<,'>ZkMatch <cr>", "search notes by selection" },
-    },
-}
-
 M.gitsigns = {
     pkg = true,
 

@@ -38,13 +38,6 @@ M.init = function()
     wk.register({
         l = "lsp",
         s = "search",
-        z = {
-            name = "zk",
-            ["n"] = {},
-            ["o"] = {},
-            ["t"] = {},
-            ["f"] = {},
-        },
     }, { prefix = "<space>" })
     -- wk.register({}, { prefix = "<leader>" })
     wk.setup(options)

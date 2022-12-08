@@ -136,13 +136,6 @@ local pkgs = {
         setup = function() require("core.utils").load_mappings("leap_ast") end,
     },
 
-    ["mickael-menu/zk-nvim"] = {
-        ft = { "markdown" },
-        cmd = require("core.lazy_load").zk_cmds,
-        setup = function() require("core.utils").load_mappings("zk") end,
-        config = function() require("body.part-zk") end,
-    },
-
     -- themes
     ["bluz71/vim-moonfly-colors"] = { opt = true },
     ["bluz71/vim-nightfly-guicolors"] = { opt = true },
