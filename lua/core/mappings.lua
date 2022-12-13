@@ -20,13 +20,10 @@ M.general = {
 
     n = {
         -- save
-        ["<leader>w"] = { "<cmd> w <cr>", "save" },
-        ["<leader>q"] = { "<cmd> q! <cr>", "force quit" },
-        ["<leader>c"] = { "<cmd> bd <cr>", "close buffer" },
-
+        ["<space>j"] = { "<cmd> w <cr>", "save buffer" },
+        ["<space>k"] = { "<cmd> bd <cr>", "kill buffer" },
+        ["<space>q"] = { "<cmd> q! <cr>", "force quit" },
         ["<space><space>"] = { "<cmd> wq <cr>", "save and quit" },
-
-        ["<leader><leader>"] = { "<cmd> normal zz <cr>", "center line" },
 
         -- switch between windows
         ["<space>n"] = { "<c-w>w", "next window" },
@@ -34,9 +31,11 @@ M.general = {
         ["<c-l>"] = { "<c-w>w", "next window" },
         ["<c-h>"] = { "<c-w>W", "previous window" },
 
-        -- goto line
+        -- line motion
         ["gh"] = { "0", "goto beginning of line" },
         ["gl"] = { "$", "goto end of line" },
+        ["<leader><leader>"] = { "<cmd> normal zz <cr>", "center line" },
+
 
         -- search highlights
         ["n"] = { "n<cmd> set hlsearch <cr>", "next search result" },
@@ -156,7 +155,7 @@ M.comment = {
 M.lspconfig = {
     pkg = true,
     n = {
-        ["<space>k"] = { function() vim.lsp.buf.hover() end, "lsp hover" },
+        ["K"] = { function() vim.lsp.buf.hover() end, "lsp hover" },
         ["<c-n>"] = { function() vim.diagnostic.goto_next() end, "goto next diagnostics" },
         ["<c-p>"] = { function() vim.diagnostic.goto_prev() end, "goto prev diagnostics" },
         ["<space>d"] = { function() vim.diagnostic.open_float() end, "floating diagnostic" },
