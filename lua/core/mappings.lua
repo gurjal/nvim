@@ -20,22 +20,20 @@ M.general = {
 
     n = {
         -- save
-        ["<space>j"] = { "<cmd> w <cr>", "save buffer" },
-        ["<space>k"] = { "<cmd> bd <cr>", "kill buffer" },
-        ["<space>q"] = { "<cmd> q! <cr>", "force quit" },
-        ["<space><space>"] = { "<cmd> wq <cr>", "save and quit" },
+        ["<leader>w"] = { "<cmd> w <cr>", "save buffer" },
+        ["<leader>d"] = { "<cmd> bd <cr>", "delete buffer" },
+        ["<leader>q"] = { "<cmd> wq <cr>", "save and quit" },
+        ["<leader>Q"] = { "<cmd> q! <cr>", "force quit" },
 
         -- switch between windows
-        ["<space>n"] = { "<c-w>w", "next window" },
-        ["<space>p"] = { "<c-w>W", "previous window" },
+        ["<leader>n"] = { "<c-w>w", "next window" },
+        ["<leader>p"] = { "<c-w>W", "previous window" },
         ["<c-l>"] = { "<c-w>w", "next window" },
         ["<c-h>"] = { "<c-w>W", "previous window" },
 
         -- line motion
         ["gh"] = { "0", "goto beginning of line" },
         ["gl"] = { "$", "goto end of line" },
-        ["<leader><leader>"] = { "<cmd> normal zz <cr>", "center line" },
-
 
         -- search highlights
         ["n"] = { "n<cmd> set hlsearch <cr>", "next search result" },
@@ -57,7 +55,7 @@ M.general = {
         ["<c-k>"] = { "<cmd> bprev <cr>", "previous buffer" },
 
         -- append line
-        ["]<space>"] = {
+        ["]<leader>"] = {
             function()
                 local cursor_pos = api.nvim_win_get_cursor(0)
                 cmd.normal("o")
@@ -67,7 +65,7 @@ M.general = {
         },
 
         -- prepend line
-        ["[<space>"] = {
+        ["[<leader>"] = {
             function()
                 local cursor_pos = api.nvim_win_get_cursor(0)
                 cmd.normal("O")
@@ -81,33 +79,33 @@ M.general = {
             "start which key",
         },
 
-        ["<leader>b"] = {
+        ["<leader>oB"] = {
             function() require("body.part-utils.hardline").toggle() end,
             "toggle status line",
         },
 
-        ["<leader>B"] = {
+        ["<leader>ob"] = {
             function() require("body.part-utils.cmdheight").toggle() end,
             "toggle cmdheight",
         },
 
-        ["<leader>y"] = {
+        ["<leader>oy"] = {
             function() require("body.part-utils.scroll_mode").toggle() end,
             "toggle scroll mode",
         },
 
-        ["<leader>n"] = {
+        ["<leader>on"] = {
             function() require("body.part-utils.line_numbers").toggle() end,
             "toggle line numbers",
         },
 
-        ["<leader>a"] = {
+        ["<leader>oa"] = {
             function() require("body.part-utils.line_wrap").toggle() end,
             "toggle line wrapping",
         },
 
-        ["<leader>l"] = { "<cmd> LspStart <cr>", "start lsp" },
-        ["<leader>L"] = { "<cmd> LspStop <cr>", "stop lsp" },
+        ["<leader>ol"] = { "<cmd> LspStart <cr>", "start lsp" },
+        ["<leader>oL"] = { "<cmd> LspStop <cr>", "stop lsp" },
     },
 
     v = {
@@ -126,26 +124,26 @@ M.general = {
 
 M.neotree = {
     pkg = true,
-    n = { ["<space>e"] = { "<cmd> Neotree action=focus toggle=true <cr>", "toggle file explorer" } },
+    n = { ["<leader>e"] = { "<cmd> Neotree action=focus toggle=true <cr>", "toggle file explorer" } },
 }
 
 M.leap_ast = {
     pkg = true,
-    n = { ["<space>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
-    x = { ["<space>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
-    o = { ["<space>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
+    n = { ["<leader>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
+    x = { ["<leader>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
+    o = { ["<leader>u"] = { function() require("leap-ast").leap() end, "leap to node" } },
 }
 
 M.comment = {
     pkg = true,
     n = {
-        ["<space>/"] = {
+        ["<leader>/"] = {
             function() require("Comment.api").toggle.linewise.current() end,
             "toggle comment",
         },
     },
     v = {
-        ["<space>/"] = {
+        ["<leader>/"] = {
             "<ESC><cmd>lua require('Comment.api').toggle.linewise(vim.fn.visualmode())<CR>",
             "toggle comment",
         },
@@ -158,41 +156,40 @@ M.lspconfig = {
         ["K"] = { function() vim.lsp.buf.hover() end, "lsp hover" },
         ["<c-n>"] = { function() vim.diagnostic.goto_next() end, "goto next diagnostics" },
         ["<c-p>"] = { function() vim.diagnostic.goto_prev() end, "goto prev diagnostics" },
-        ["<space>d"] = { function() vim.diagnostic.open_float() end, "floating diagnostic" },
         ["gD"] = { function() vim.lsp.buf.declaration() end, "lsp declaration" },
-        ["<space>r"] = { function() vim.lsp.buf.rename() end, "lsp rename" },
-        ["<space>ls"] = { function() vim.lsp.buf.signature_help() end, "lsp signature help" },
-        ["<space>lc"] = { function() vim.lsp.buf.code_action() end, "lsp code action" },
-        ["<space>lq"] = { function() vim.diagnostic.setloclist() end, "diagnostic setloclist" },
-        ["<space>lwa"] = { function() vim.lsp.buf.add_workspace_folder() end, "add workspace folder" },
-        ["<space>lwr"] = { function() vim.lsp.buf.remove_workspace_folder() end, "remove workspace folder" },
-        ["<space>lwl"] = {
+        ["<leader>r"] = { function() vim.lsp.buf.rename() end, "lsp rename" },
+        ["<leader>ls"] = { function() vim.lsp.buf.signature_help() end, "lsp signature help" },
+        ["<leader>lc"] = { function() vim.lsp.buf.code_action() end, "lsp code action" },
+        ["<leader>lq"] = { function() vim.diagnostic.setloclist() end, "diagnostic setloclist" },
+        ["<leader>lwa"] = { function() vim.lsp.buf.add_workspace_folder() end, "add workspace folder" },
+        ["<leader>lwr"] = { function() vim.lsp.buf.remove_workspace_folder() end, "remove workspace folder" },
+        ["<leader>lwl"] = {
             function() print(vim.inspect(vim.lsp.buf.list_workspace_folders())) end,
             "list workspace folders",
         },
         ["gd"] = { "<cmd> Telescope lsp_definitions <cr>", "lsp definition" },
         ["gi"] = { "<cmd> Telescope lsp_implementations <cr>", "lsp implementation" },
         ["gt"] = { "<cmd> Telescope lsp_type_definitions <cr>", "lsp definition type" },
-        ["<space>w"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
-        ["<space>W"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
-        ["<space>sd"] = { "<cmd> Telescope diagnostics <cr>", "search lsp diagnostics" },
-        ["<space>lr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
-        ["<space>li"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
-        ["<space>lo"] = { "<cmd> Telescope lsp_outgoing_calls <cr>", "search lsp outgoing calls" },
+        ["<leader>m"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
+        ["<leader>M"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
+        ["<leader>sd"] = { "<cmd> Telescope diagnostics <cr>", "search lsp diagnostics" },
+        ["<leader>lr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
+        ["<leader>li"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
+        ["<leader>lo"] = { "<cmd> Telescope lsp_outgoing_calls <cr>", "search lsp outgoing calls" },
     },
 }
 
 M.formatter = {
     pkg = true,
     n = {
-        ["<leader>F"] = { "<cmd> Format <cr>", "format document" },
-        ["<leader>f"] = {
+        ["<leader>oF"] = { "<cmd> Format <cr>", "format document" },
+        ["<leader>of"] = {
             function() require("body.part-utils.autoformat").toggle() end,
             "toggle autoformatting",
         },
     },
     v = {
-        ["<leader>f"] = { "<cmd> '<,'>Format <cr>", "format selection" },
+        ["<leader>of"] = { "<cmd> '<,'>Format <cr>", "format selection" },
     },
 }
 
@@ -209,20 +206,20 @@ M.vim_easy_align = {
 M.telescope = {
     pkg = true,
     n = {
-        ["<space>f"] = { "<cmd> Telescope find_files <cr>", "search files" },
-        ["<space>g"] = { "<cmd> Telescope live_grep <cr>", "live grep" },
-        ["<space>b"] = { "<cmd> Telescope buffers <cr>", "search buffers" },
-        ["<space>w"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
-        ["<space>sh"] = { "<cmd> Telescope help_tags <cr>", "search page" },
-        ["<space>sr"] = { "<cmd> Telescope oldfiles <cr>", "search oldfiles" },
-        ["<space>s;"] = { "<cmd> Telescope commands <cr>", "search commands" },
+        ["<leader>f"] = { "<cmd> Telescope find_files <cr>", "search files" },
+        ["<leader>g"] = { "<cmd> Telescope live_grep <cr>", "live grep" },
+        ["<leader>b"] = { "<cmd> Telescope buffers <cr>", "search buffers" },
+        ["<leader>m"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
+        ["<leader>sh"] = { "<cmd> Telescope help_tags <cr>", "search page" },
+        ["<leader>sr"] = { "<cmd> Telescope oldfiles <cr>", "search oldfiles" },
+        ["<leader>s;"] = { "<cmd> Telescope commands <cr>", "search commands" },
     },
 }
 
 M.zenmode = {
     pkg = true,
     n = {
-        ["<leader>z"] = { function() cmd("ZenMode") end, "toggle zen mode" },
+        ["<leader>oz"] = { function() cmd("ZenMode") end, "toggle zen mode" },
     },
 }
 

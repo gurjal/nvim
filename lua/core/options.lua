@@ -58,7 +58,7 @@ opt.formatoptions = "tcrql"
 opt.joinspaces = false
 g.rust_recommended_style = 0
 
-g.mapleader = ","
+g.mapleader = " "
 
 -- disable some builtin vim plugins
 local default_plugins = {
