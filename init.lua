@@ -15,4 +15,4 @@ if fn.empty(fn.glob(install_path)) > 0 then
 end
 
 require("core.utils").load_mappings()
-require("colo.tundra")
+require("colo.tokyo_night")

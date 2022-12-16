@@ -104,6 +104,16 @@ M.general = {
             "toggle line wrapping",
         },
 
+        ["<leader>os"] = {
+            function() require("body.part-utils.spell_check").toggle() end,
+            "toggle spell check",
+        },
+
+        ["<leader>oo"] = {
+            function() require("body.part-utils.note_mode").toggle() end,
+            "toggle note mode",
+        },
+
         ["<leader>ol"] = { "<cmd> LspStart <cr>", "start lsp" },
         ["<leader>oL"] = { "<cmd> LspStop <cr>", "stop lsp" },
     },

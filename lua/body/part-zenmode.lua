@@ -39,9 +39,13 @@ zen_mode.setup({
     -- callback where you can add custom code when the Zen window opens
     on_open = function(win)
         -- vim.opt.cmdheight = 1
+        require("notify")("you entered zen mode")
     end,
     -- callback where you can add custom code when the Zen window closes
     on_close = function()
         -- vim.opt.cmdheight = 0
+        require("notify")("you exited zen mode")
     end,
 })
+
+
