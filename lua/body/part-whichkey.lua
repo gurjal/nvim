@@ -37,7 +37,7 @@ M.init = function()
         l = "lsp",
         s = "search",
         o = "options",
-    }, { prefix = "<space>" })
+    }, { prefix = "<leader>" })
     -- wk.register({}, { prefix = "<leader>" })
     wk.setup(options)
 end

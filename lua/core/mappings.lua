@@ -22,8 +22,8 @@ M.general = {
         -- save
         ["<leader>w"] = { "<cmd> w <cr>", "save buffer" },
         ["<leader>d"] = { "<cmd> bd <cr>", "delete buffer" },
-        ["<leader>q"] = { "<cmd> wq <cr>", "save and quit" },
-        ["<leader>Q"] = { "<cmd> q! <cr>", "force quit" },
+        ["<leader><leader>"] = { "<cmd> wq <cr>", "save and quit" },
+        ["<leader>q"] = { "<cmd> q! <cr>", "force quit" },
 
         -- switch between windows
         ["<leader>n"] = { "<c-w>w", "next window" },

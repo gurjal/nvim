@@ -70,10 +70,7 @@ end
 
 M.python = function()
     -- python
-    lspconfig["pyright"].setup({
-        on_attach = on_attach,
-        capabilities = capabilities,
-    })
+    require'lspconfig'.pylsp.setup{}
 end
 
 M.arduino = function()

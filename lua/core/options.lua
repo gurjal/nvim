@@ -23,7 +23,7 @@ opt.showmode = false
 opt.mouse = "a"
 
 -- window
-opt.cmdheight = 1
+opt.cmdheight = 0
 opt.showtabline = 1
 opt.numberwidth = 4
 opt.laststatus = 0

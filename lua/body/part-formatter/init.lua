@@ -7,6 +7,7 @@ M.init = function()
             c = { require("body.part-formatter.lang.formatter-c") },
             cpp = { require("body.part-formatter.lang.formatter-c") },
             rust = { require("body.part-formatter.lang.formatter-rust") },
+            python = { require("body.part-formatter.lang.formatter-python") },
             sh = { require("body.part-formatter.lang.formatter-sh") },
             ["*"] = { require("formatter.filetypes.any").remove_trailing_whitespace },
         },
