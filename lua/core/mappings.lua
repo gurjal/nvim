@@ -26,10 +26,12 @@ M.general = {
         ["<leader>q"] = { "<cmd> q! <cr>", "force quit" },
 
         -- switch between windows
-        ["<leader>n"] = { "<c-w>w", "next window" },
-        ["<leader>p"] = { "<c-w>W", "previous window" },
-        ["<c-l>"] = { "<c-w>w", "next window" },
-        ["<c-h>"] = { "<c-w>W", "previous window" },
+        -- ["<leader>n"] = { "<c-w>w", "next window" },
+        -- ["<leader>p"] = { "<c-w>W", "previous window" },
+        ["<c-h>"] = { "<c-w>h", "window left" },
+        ["<c-l>"] = { "<c-w>l", "window right" },
+        ["<c-j>"] = { "<c-w>j", "window down" },
+        ["<c-k>"] = { "<c-w>k", "window up" },
 
         -- line motion
         ["gh"] = { "0", "goto beginning of line" },
@@ -51,8 +53,8 @@ M.general = {
         -- new buffer
         ["\\"] = { "<cmd> bnext <cr>", "next buffer" },
         ["|"] = { "<cmd> bprev <cr>", "previous buffer" },
-        ["<c-j>"] = { "<cmd> bnext <cr>", "next buffer" },
-        ["<c-k>"] = { "<cmd> bprev <cr>", "previous buffer" },
+        ["<a-j>"] = { "<cmd> bnext <cr>", "next buffer" },
+        ["<a-k>"] = { "<cmd> bprev <cr>", "previous buffer" },
 
         -- append line
         ["]<leader>"] = {
@@ -74,7 +76,7 @@ M.general = {
             "prepend line",
         },
 
-        ["<leader>k"] = {
+        ["<leader>ok"] = {
             function() require("body.part-whichkey").init() end,
             "start which key",
         },
@@ -180,8 +182,8 @@ M.lspconfig = {
         ["gd"] = { "<cmd> Telescope lsp_definitions <cr>", "lsp definition" },
         ["gi"] = { "<cmd> Telescope lsp_implementations <cr>", "lsp implementation" },
         ["gt"] = { "<cmd> Telescope lsp_type_definitions <cr>", "lsp definition type" },
-        ["<leader>m"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
-        ["<leader>M"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
+        ["<leader>k"] = { "<cmd> Telescope lsp_document_symbols <cr>", "search lsp document symbols" },
+        ["<leader>K"] = { "<cmd> Telescope lsp_dynamic_workspace_symbols <cr>", "search lsp workspace symbols" },
         ["<leader>sd"] = { "<cmd> Telescope diagnostics <cr>", "search lsp diagnostics" },
         ["<leader>lr"] = { "<cmd> Telescope lsp_references <cr>", "lsp references" },
         ["<leader>li"] = { "<cmd> Telescope lsp_incoming_calls <cr>", "search lsp incoming calls" },
@@ -219,10 +221,11 @@ M.telescope = {
         ["<leader>f"] = { "<cmd> Telescope find_files <cr>", "search files" },
         ["<leader>g"] = { "<cmd> Telescope live_grep <cr>", "live grep" },
         ["<leader>b"] = { "<cmd> Telescope buffers <cr>", "search buffers" },
-        ["<leader>m"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
-        ["<leader>sh"] = { "<cmd> Telescope help_tags <cr>", "search page" },
+        ["<leader>k"] = { "<cmd> Telescope treesitter <cr>", "search treesitter" },
+        ["<leader>m"] = { "<cmd> Telescope marks <cr>", "search marks" },
         ["<leader>sr"] = { "<cmd> Telescope oldfiles <cr>", "search oldfiles" },
         ["<leader>s;"] = { "<cmd> Telescope commands <cr>", "search commands" },
+        ["<leader>sh"] = { "<cmd> Telescope help_tags <cr>", "search page" },
     },
 }
 
