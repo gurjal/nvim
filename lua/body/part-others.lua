@@ -1,22 +1,20 @@
 local M = {}
 
-local utils = require("core.utils")
+local utils = require 'core.utils'
 
 M.neotree = function()
     vim.g.neo_tree_remove_legacy_commands = 1
-    require("neo-tree").setup()
+    require('neo-tree').setup()
 end
 
 M.colorizer = function()
-    local present, colorizer = pcall(require, "colorizer")
+    local present, colorizer = pcall(require, 'colorizer')
 
-    if not present then
-        return
-    end
+    if not present then return end
 
     local options = {
         filetypes = {
-            "*",
+            '*',
         },
         user_default_options = {
             RGB = true, -- #RGB hex codes
@@ -27,62 +25,59 @@ M.colorizer = function()
             hsl_fn = false, -- CSS hsl() and hsla() functions
             css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
             css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            mode = "background", -- Set the display mode.
+            mode = 'virtualtext', -- Set the display mode.
         },
     }
 
     colorizer.setup(options)
     -- execute colorizer as soon as possible
-    vim.defer_fn(function()
-        require("colorizer").attach_to_buffer(0)
-    end, 0)
+    vim.defer_fn(function() require('colorizer').attach_to_buffer(0) end, 0)
 end
 
 M.comment = function()
-    local present, nvim_comment = pcall(require, "Comment")
+    local present, nvim_comment = pcall(require, 'Comment')
 
-    if not present then
-        return
-    end
+    if not present then return end
 
-    local options = {}
+    local options = {
+        toggler = { line = '<leader>cc' },
+        opleader = { line = '<leader>c' },
+        extra = { above = '<leader>cO', below = '<leader>co', eol = '<leader>cA' },
+        mappings = { basic = true, extra = true },
+    }
     nvim_comment.setup(options)
 end
 
 M.luasnip = function()
-    local present, luasnip = pcall(require, "luasnip")
+    local present, luasnip = pcall(require, 'luasnip')
 
-    if not present then
-        return
-    end
+    if not present then return end
 
     local options = {
         history = true,
-        updateevents = "TextChanged,TextChangedI",
+        updateevents = 'TextChanged,TextChangedI',
     }
 
     luasnip.config.set_config(options)
-    require("luasnip.loaders.from_vscode").lazy_load({ paths = vim.g.luasnippets_path or "" })
-    require("luasnip.loaders.from_vscode").lazy_load()
+    require('luasnip.loaders.from_vscode').lazy_load { paths = vim.g.luasnippets_path or '' }
+    require('luasnip.loaders.from_vscode').lazy_load()
 
-    vim.api.nvim_create_autocmd("InsertLeave", {
+    vim.api.nvim_create_autocmd('InsertLeave', {
         callback = function()
             if
-                require("luasnip").session.current_nodes[vim.api.nvim_get_current_buf()]
-                and not require("luasnip").session.jump_active
+                require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]
+                and not require('luasnip').session.jump_active
             then
-                require("luasnip").unlink_current()
+                require('luasnip').unlink_current()
             end
         end,
     })
 end
 
 M.gitsigns = function()
-    local present, gitsigns = pcall(require, "gitsigns")
+    local present, gitsigns = pcall(require, 'gitsigns')
 
-    if not present then
-        return
-    end
+    if not present then return end
 
     local options = {
         -- signs = {
@@ -92,20 +87,16 @@ M.gitsigns = function()
         --   topdelete = { hl = "DiffDelete", text = "‾", numhl = "GitSignsDeleteNr" },
         --   changedelete = { hl = "DiffChangeDelete", text = "~", numhl = "GitSignsChangeNr" },
         -- },
-        on_attach = function(bufnr)
-            utils.load_mappings("gitsigns", { buffer = bufnr })
-        end,
+        on_attach = function(bufnr) utils.load_mappings('gitsigns', { buffer = bufnr }) end,
     }
 
     gitsigns.setup(options)
 end
 
 M.devicons = function()
-    local present, devicons = pcall(require, "nvim-web-devicons")
+    local present, devicons = pcall(require, 'nvim-web-devicons')
 
-    if present then
-        devicons.setup()
-    end
+    if present then devicons.setup() end
 end
 
 M.packer_init = function()
@@ -114,14 +105,12 @@ M.packer_init = function()
         compile_on_sync = true,
         git = { clone_timeout = 6000 },
         display = {
-            working_sym = "ﲊ",
-            error_sym = "✗ ",
-            done_sym = " ",
-            removed_sym = " ",
-            moved_sym = "",
-            open_fn = function()
-                return require("packer.util").float({ border = "single" })
-            end,
+            working_sym = 'ﲊ',
+            error_sym = '✗ ',
+            done_sym = ' ',
+            removed_sym = ' ',
+            moved_sym = '',
+            open_fn = function() return require('packer.util').float { border = 'single' } end,
         },
     }
 end

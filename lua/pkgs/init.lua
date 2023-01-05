@@ -102,7 +102,7 @@ local pkgs = {
     ["numToStr/Comment.nvim"] = {
         -- module = "Comment",
         config = function() require("body.part-others").comment() end,
-        setup = function() require("core.utils").load_mappings("comment") end,
+        -- setup = function() require("core.utils").load_mappings("comment") end,
     },
 
     ["nvim-telescope/telescope.nvim"] = {
@@ -127,13 +127,8 @@ local pkgs = {
     ["ggandor/leap.nvim"] = {
         module = "leap",
         wants = "vim-repeat",
-        keys = { "s", "S", "x", "X" },
+        setup = function() require("core.utils").load_mappings("leap") end,
         config = function() require("body.part-leap").init() end,
-    },
-    ["ggandor/leap-ast.nvim"] = {
-        module = "leap-ast",
-        wants = "leap.nvim",
-        setup = function() require("core.utils").load_mappings("leap_ast") end,
     },
 
     -- themes
