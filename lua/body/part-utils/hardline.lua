@@ -2,7 +2,6 @@ local opt = vim.opt
 local M = {}
 
 local alive = false
-
 local status = false
 
 M.toggle = function()

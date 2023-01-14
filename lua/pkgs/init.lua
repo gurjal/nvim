@@ -28,6 +28,10 @@ local pkgs = {
         config = function() require("body.part-treesitter").init() end,
     },
 
+    ["folke/which-key.nvim"] = {
+        config = function() require("body.part-whichkey").init() end,
+    },
+
     -- git stuff
     ["lewis6991/gitsigns.nvim"] = {
         ft = "gitcommit",
@@ -87,8 +91,6 @@ local pkgs = {
         config = function() require("body.part-formatter").init() end,
     },
 
-    ["ojroques/nvim-hardline"] = { module = "hardline" },
-
     ["kylechui/nvim-surround"] = {
         module = "nvim-surround",
         event = "VimEnter",
@@ -111,8 +113,6 @@ local pkgs = {
         setup = function() require("core.utils").load_mappings("telescope") end,
     },
 
-    ["folke/which-key.nvim"] = { module = "which-key" },
-
     ["folke/twilight.nvim"] = { module = "twilight" },
 
     ["folke/zen-mode.nvim"] = {
@@ -132,6 +132,7 @@ local pkgs = {
     },
 
     -- themes
+    ["Shatur/neovim-ayu"] = { opt = true },
     ["bluz71/vim-moonfly-colors"] = { opt = true },
     ["bluz71/vim-nightfly-guicolors"] = { opt = true },
     ["embark-theme/vim"] = { as = "embark", opt = true },
@@ -141,6 +142,7 @@ local pkgs = {
     ["rose-pine/neovim"] = { as = "rose_pine", opt = true },
     ["sainnhe/everforest"] = { opt = true },
     ["sam4llis/nvim-tundra"] = { opt = true },
+    ["drewtempelmeyer/palenight.vim"] = { opt = true },
 }
 
 -- Load all pkgs

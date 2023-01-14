@@ -5,9 +5,9 @@ M.general = {
     i = {
         ['jk'] = { '<esc>', 'escape sequence' },
 
-        -- go to beginning and end
-        ['<c-b>'] = { '<ESC>^i', 'beginning of line' },
-        ['<c-e>'] = { '<End>', 'end of line' },
+        -- -- go to beginning and end
+        -- ['<c-b>'] = { '<ESC>^i', 'beginning of line' },
+        -- ['<c-e>'] = { '<End>', 'end of line' },
 
         -- -- navigate within insert mode
         -- ['<c-h>'] = { '<Left>', 'move left' },
@@ -17,6 +17,10 @@ M.general = {
     },
 
     n = {
+        -- go to beginning and end
+        ['gh'] = { '0', 'beginning of line' },
+        ['gl'] = { '$', 'end of line' },
+
         -- save
         ['<leader>w'] = { '<cmd> w <cr>', 'save buffer' },
         ['<leader>d'] = { '<cmd> bd <cr>', 'delete buffer' },
@@ -25,9 +29,7 @@ M.general = {
 
         -- buffers
         ['\\'] = { '<cmd> bnext <cr>', 'next buffer' },
-        ['|'] = { '<cmd> bprev <cr>', 'previous buffer' },
-        ['<a-n>'] = { '<cmd> bnext <cr>', 'next buffer' },
-        ['<a-p>'] = { '<cmd> bprev <cr>', 'previous buffer' },
+        ['|'] =  { '<cmd> bprev <cr>', 'previous buffer' },
 
         -- tabs
         ['<a-f>'] = { '<cmd> tabnext <cr>', 'next tab' },
@@ -72,48 +74,48 @@ M.general = {
         --     "prepend line",
         -- },
 
-        ['<leader>tk'] = {
+        ['<leader>uk'] = {
             function() require('body.part-whichkey').init() end,
             'start which key',
         },
 
-        ['<leader>tB'] = {
-            function() require('body.part-utils.hardline').toggle() end,
-            'toggle status line',
-        },
+        -- ['<leader>uB'] = {
+        --     function() require('body.part-utils.hardline').toggle() end,
+        --     'toggle status line',
+        -- },
 
-        ['<leader>tb'] = {
+        ['<leader>ub'] = {
             function() require('body.part-utils.cmdheight').toggle() end,
             'toggle cmdheight',
         },
 
-        ['<leader>ty'] = {
+        ['<leader>uy'] = {
             function() require('body.part-utils.scroll_mode').toggle() end,
             'toggle scroll mode',
         },
 
-        ['<leader>tn'] = {
+        ['<leader>un'] = {
             function() require('body.part-utils.line_numbers').toggle() end,
             'toggle line numbers',
         },
 
-        ['<leader>ta'] = {
+        ['<leader>ua'] = {
             function() require('body.part-utils.line_wrap').toggle() end,
             'toggle line wrapping',
         },
 
-        ['<leader>ts'] = {
+        ['<leader>us'] = {
             function() require('body.part-utils.spell_check').toggle() end,
             'toggle spell check',
         },
 
-        ['<leader>to'] = {
+        ['<leader>uo'] = {
             function() require('body.part-utils.note_mode').toggle() end,
             'toggle note mode',
         },
 
-        ['<leader>tl'] = { '<cmd> LspStart <cr>', 'start lsp' },
-        ['<leader>tL'] = { '<cmd> LspStop <cr>', 'stop lsp' },
+        ['<leader>ul'] = { '<cmd> LspStart <cr>', 'start lsp' },
+        ['<leader>uL'] = { '<cmd> LspStop <cr>', 'stop lsp' },
     },
 
     v = {
@@ -222,25 +224,19 @@ M.lspconfig = {
 M.formatter = {
     pkg = true,
     n = {
-        ['<leader>tF'] = { '<cmd> Format <cr>', 'format document' },
-        ['<leader>tf'] = {
+        ['<leader>uF'] = { '<cmd> Format <cr>', 'format document' },
+        ['<leader>uf'] = {
             function() require('body.part-utils.autoformat').toggle() end,
             'toggle autoformatting',
         },
     },
-    v = {
-        ['<leader>tf'] = { "<cmd> '<,'>Format <cr>", 'format selection' },
-    },
+    v = { ['<leader>uf'] = { "<cmd> '<,'>Format <cr>", 'format selection' } },
 }
 
 M.vim_easy_align = {
     pkg = true,
-    x = {
-        ['ga'] = { '<Plug>(EasyAlign)', 'align selection to char' },
-    },
-    n = {
-        ['ga'] = { '<Plug>(EasyAlign)', 'align selection to char' },
-    },
+    x = { ['ga'] = { '<Plug>(EasyAlign)', 'align selection to char' } },
+    n = { ['ga'] = { '<Plug>(EasyAlign)', 'align selection to char' } },
 }
 
 M.telescope = {
@@ -254,7 +250,6 @@ M.telescope = {
         },
         ['<leader>b'] = { '<cmd> Telescope buffers <cr>', 'search buffers' },
         ['<leader>k'] = { '<cmd> Telescope treesitter <cr>', 'search treesitter' },
-        ['<leader>m'] = { '<cmd> Telescope marks <cr>', 'search marks' },
         ['<leader>sr'] = { '<cmd> Telescope oldfiles <cr>', 'search oldfiles' },
         ['<leader>s;'] = { '<cmd> Telescope commands <cr>', 'search commands' },
         ['<leader>sh'] = { '<cmd> Telescope help_tags <cr>', 'search page' },
@@ -264,7 +259,7 @@ M.telescope = {
 M.zenmode = {
     pkg = true,
     n = {
-        ['<leader>tz'] = { function() cmd 'ZenMode' end, 'toggle zen mode' },
+        ['<leader>uz'] = { function() cmd 'ZenMode' end, 'toggle zen mode' },
     },
 }
 

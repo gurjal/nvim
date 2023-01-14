@@ -40,9 +40,9 @@ M.comment = function()
     if not present then return end
 
     local options = {
-        toggler = { line = '<leader>cc' },
-        opleader = { line = '<leader>c' },
-        extra = { above = '<leader>cO', below = '<leader>co', eol = '<leader>cA' },
+        toggler = { line = 'gcc' },
+        opleader = { line = 'gc' },
+        extra = { above = 'gcO', below = 'gco', eol = 'gcA' },
         mappings = { basic = true, extra = true },
     }
     nvim_comment.setup(options)

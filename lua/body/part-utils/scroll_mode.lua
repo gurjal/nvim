@@ -1,26 +1,18 @@
 local cmd = vim.cmd
 local opt = vim.opt
+local buf = vim.opt_local
 local M = {}
 
-local user_scrolloff = nil
-local user_cursorline = nil
-
-local init = function()
-    user_scrolloff = opt.scrolloff:get()
-    user_cursorline = opt.cursorline:get()
-end
-
 M.toggle = function()
-    if user_scrolloff == nil then init() end
-    if opt.scrolloff:get() ~= user_scrolloff then
-        opt.scrolloff = user_scrolloff
-        opt.cursorline = user_cursorline
-        require 'notify' 'scroll mode is off'
-    else
+    if buf.scrolloff:get() ~= 9999 then
         cmd.normal 'M'
-        opt.scrolloff = 9999
-        opt.cursorline = false
+        buf.scrolloff = 9999
+        buf.cursorline = false
         require 'notify' 'scroll mode is on'
+    else
+        buf.scrolloff = opt.scrolloff:get()
+        buf.cursorline = opt.cursorline:get()
+        require 'notify' 'scroll mode is off'
     end
 end
 
