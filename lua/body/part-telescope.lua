@@ -42,7 +42,7 @@ local options = {
         mappings = {
             n = {
                 ['q'] = actions.close,
-                ['  '] = actions.close,
+                ['<c-c>'] = actions.close,
             },
         },
     },

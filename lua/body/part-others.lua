@@ -25,7 +25,7 @@ M.colorizer = function()
             hsl_fn = false, -- CSS hsl() and hsla() functions
             css = false, -- Enable all CSS features: rgb_fn, hsl_fn, names, RGB, RRGGBB
             css_fn = false, -- Enable all CSS *functions*: rgb_fn, hsl_fn
-            mode = 'virtualtext', -- Set the display mode.
+            -- mode = 'virtualtext', -- Set the display mode.
         },
     }
 
@@ -40,10 +40,7 @@ M.comment = function()
     if not present then return end
 
     local options = {
-        toggler = { line = 'gcc' },
-        opleader = { line = 'gc' },
-        extra = { above = 'gcO', below = 'gco', eol = 'gcA' },
-        mappings = { basic = true, extra = true },
+        mappings = { basic = false, extra = false },
     }
     nvim_comment.setup(options)
 end
@@ -77,20 +74,7 @@ end
 M.gitsigns = function()
     local present, gitsigns = pcall(require, 'gitsigns')
 
-    if not present then return end
-
-    local options = {
-        -- signs = {
-        --   add = { hl = "DiffAdd", text = "│", numhl = "GitSignsAddNr" },
-        --   change = { hl = "DiffChange", text = "│", numhl = "GitSignsChangeNr" },
-        --   delete = { hl = "DiffDelete", text = "", numhl = "GitSignsDeleteNr" },
-        --   topdelete = { hl = "DiffDelete", text = "‾", numhl = "GitSignsDeleteNr" },
-        --   changedelete = { hl = "DiffChangeDelete", text = "~", numhl = "GitSignsChangeNr" },
-        -- },
-        on_attach = function(bufnr) utils.load_mappings('gitsigns', { buffer = bufnr }) end,
-    }
-
-    gitsigns.setup(options)
+    if present then gitsigns.setup() end
 end
 
 M.devicons = function()

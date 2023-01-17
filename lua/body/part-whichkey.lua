@@ -12,12 +12,17 @@ local options = {
 
 M.init = function()
     local wk = require 'which-key'
-    -- wk.register({
-    --     l = "lsp",
-    --     s = "search",
-    --     t = "toggle",
-    -- }, { prefix = "<leader>" })
-    wk.register({}, { prefix = '<leader>' })
+    wk.register({
+        c = { name = 'code' },
+        b = { name = 'buffer' },
+        m = { name = 'mode' },
+        w = { name = 'window' },
+    }, { prefix = '<leader>' })
+    wk.register({
+        c = {
+            name = 'code',
+        },
+    }, { prefix = 'g' })
     wk.setup(options)
 end
 

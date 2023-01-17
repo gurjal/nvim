@@ -1,12 +1,17 @@
 local pkgs = {
 
-    ["lewis6991/impatient.nvim"] = {},
+    ["lewis6991/impatient.nvim"] = { module = "impatient" },
 
     ["nvim-lua/plenary.nvim"] = { module = "plenary" },
 
     ["wbthomason/packer.nvim"] = {
         cmd = require("core.lazy_load").packer_cmds,
         config = function() require("pkgs") end,
+    },
+
+    ["nvim-telescope/telescope.nvim"] = {
+        cmd = "Telescope",
+        config = function() require("body.part-telescope") end,
     },
 
     ["kyazdani42/nvim-web-devicons"] = {
@@ -76,14 +81,6 @@ local pkgs = {
         config = function() require("body.part-notify").init() end,
     },
 
-    ["MunifTanjim/nui.nvim"] = { module = "nui" },
-
-    ["nvim-neo-tree/neo-tree.nvim"] = {
-        cmd = "Neotree",
-        setup = function() require("core.utils").load_mappings("neotree") end,
-        config = function() require("body.part-neotree").init() end,
-    },
-
     -- formatting
     ["mhartington/formatter.nvim"] = {
         cmd = "FormatWrite",
@@ -102,19 +99,12 @@ local pkgs = {
     },
 
     ["numToStr/Comment.nvim"] = {
-        -- module = "Comment",
+        module = "Comment",
         config = function() require("body.part-others").comment() end,
-        -- setup = function() require("core.utils").load_mappings("comment") end,
-    },
-
-    ["nvim-telescope/telescope.nvim"] = {
-        cmd = "Telescope",
-        config = function() require("body.part-telescope") end,
-        setup = function() require("core.utils").load_mappings("telescope") end,
+        setup = function() require("core.utils").load_mappings("comment") end,
     },
 
     ["folke/twilight.nvim"] = { module = "twilight" },
-
     ["folke/zen-mode.nvim"] = {
         cmd = "ZenMode",
         wants = "twilight.nvim",
